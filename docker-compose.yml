@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  # MongoDB container
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  # PostgreSQL container
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: example
+
+  # Django container
+  django:
+    image: python:3.9
+    container_name: django
+    command: bash -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./kartProduct:/app
+    depends_on:
+      - mongodb
+      - postgres
+    environment:
+      DJANGO_DB_ENGINE: "django.db.backends.postgresql"
+      DJANGO_DB_NAME: "mydb"
+      DJANGO_DB_USER: "myuser"
+      DJANGO_DB_PASSWORD: "example"
+      DJANGO_DB_HOST: "postgres"
+      DJANGO_DB_PORT: "5432"
+      DJANGO_SECRET_KEY: "your_secret_key"

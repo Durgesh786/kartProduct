@@ -34,11 +34,3 @@ services:
     depends_on:
       - mongodb
       - postgres
-    environment:
-      DJANGO_DB_ENGINE: "django.db.backends.postgresql"
-      DJANGO_DB_NAME: "mydb"
-      DJANGO_DB_USER: "myuser"
-      DJANGO_DB_PASSWORD: "example"
-      DJANGO_DB_HOST: "postgres"
-      DJANGO_DB_PORT: "5432"
-      DJANGO_SECRET_KEY: "your_secret_key"
